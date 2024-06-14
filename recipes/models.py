@@ -20,14 +20,20 @@ class Category(models.Model):
 
 
 class Recipe(models.Model):
-
+    DIFFICULTY_LEVELS = [
+        (1, 'Very Easy'),
+        (2, 'Easy'),
+        (3, 'Medium'),
+        (4, 'Hard'),
+        (5, 'Very Hard'),
+    ]
     image = models.ImageField(default='default.jpg', upload_to='recipesPics')
     title = models.CharField(max_length=100)
     description = models.TextField()
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    difficulty = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS, default=3)
     portions = models.IntegerField()
     cooking_time = models.IntegerField()
     slug = models.SlugField(max_length=100, unique=True, blank=True)
