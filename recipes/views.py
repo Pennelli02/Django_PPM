@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .models import Recipe
+from .models import Recipe, Category
 
 
 # Create your views here.
@@ -57,7 +58,24 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def favorite_recipes(request):
+# mostra le ricette preferite
+@login_required
+def favorite_recipes_list(request):
     user = request.user
     recipes = Recipe.likes.filter(author=user)
     return render(request, 'recipes/likeRecipe.html', {'recipes': recipes})
+
+
+# def user_recipes_list(request):
+#    return render(request, 'recipes/userRecipes.html', {'recipes': Recipe.objects.filter(author=request.user)})
+
+# mostra tutte le categorie presenti
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'recipes/categories.html', {'categories': categories})
+
+
+# mostra le ricette presenti in una categoria
+def category_detail(request, pk):
+    categories = get_object_or_404(Category, pk=pk)
+    return render(request, 'recipes/RecipesForCategories.html', {"categories": categories})
