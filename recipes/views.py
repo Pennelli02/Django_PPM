@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
-from .models import Recipe, Category
+from .forms import RecipeForm, IngredientForm, IngredientFormSet
+from .models import Recipe, Category, Ingredient
 
 
 # Create your views here.
@@ -14,21 +15,46 @@ class RecipeListView(ListView):
     template_name = 'recipes/home.html'
 
     def get_queryset(self):
-        return Recipe.objects.annotate(num_likes=Count('likes')).order_by('-date_posted')
+        queryset = Recipe.objects.annotate(num_likes=Count('likes')).order_by('-date_posted')
 
 
+# dopo si implementa la ricerca e l'ordinamento personalizzato
 class RecipeDetailView(DetailView):
     model = Recipe
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
-    fields = ['image', 'title', 'description', 'ingredients', 'price', 'content', 'difficulty', 'portions',
-              'cooking-time', 'category']
+    form_class = RecipeForm
+    success_url = reverse_lazy('RecipeListView')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['ingredient_formset'] = IngredientFormSet(self.request.POST)
+        else:
+            data['ingredient_formset'] = IngredientFormSet(queryset=Ingredient.objects.none())
+        return data
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+        context = self.get_context_data()
+        ingredient_formset = context['ingredient_formset']
+        if form.is_valid() and ingredient_formset.is_valid():
+            self.object = form.save(commit=False)
+            self.object.author = self.request.user
+            self.object.save()
+            ingredients = ingredient_formset.save(commit=False)
+            for ingredient in ingredients:
+                ingredient.save()
+                self.object.ingredients.add(ingredient)
+            self.object.save()
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        return super().get(request, *args, **kwargs)
 
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

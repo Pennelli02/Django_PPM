@@ -10,7 +10,7 @@ from django.urls import reverse
 
 # Create your models here.
 
-
+# vengono create dall'amministratore (admin) l'utente le sceglie
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -20,13 +20,13 @@ class Category(models.Model):
 
 
 class Recipe(models.Model):
+
     image = models.ImageField(default='default.jpg', upload_to='recipesPics')
     title = models.CharField(max_length=100)
     description = models.TextField()
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    ingredients = models.TextField()  # non so se fare un collegamento
     difficulty = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     portions = models.IntegerField()
     cooking_time = models.IntegerField()
@@ -53,3 +53,11 @@ class Recipe(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=10)
+    recipe = models.ManyToManyField(Recipe, related_name='ingredients')
+
+    def __str__(self):
+        return f"{self.quantity} of {self.name}"
