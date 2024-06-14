@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -105,3 +105,25 @@ def category_list(request):
 def category_detail(request, pk):
     categories = get_object_or_404(Category, pk=pk)
     return render(request, 'recipes/RecipesForCategories.html', {"categories": categories})
+
+
+# implementa la ricerca per categoria e titolo
+class RecipeSearchView(ListView):
+    model = Recipe
+    template_name = 'recipes/recipe_search.html'
+    context_object_name = 'recipes'
+
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) |
+                Q(categories__name__icontains=query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context

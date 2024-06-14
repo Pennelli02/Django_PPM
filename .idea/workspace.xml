@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0a76d39-a6af-4b47-891e-6598f6acc987" name="Changes" comment="aggiunti gli url per la gestione users">
-      <change afterPath="$PROJECT_DIR$/recipes/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/recipes/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/recipes/newRecipe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/recipes/recipe_search.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipes/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -111,7 +109,7 @@
       <updated>1718184396323</updated>
       <workItem from="1718184422110" duration="3625000" />
       <workItem from="1718207154711" duration="20192000" />
-      <workItem from="1718374120884" duration="9973000" />
+      <workItem from="1718374120884" duration="13553000" />
     </task>
     <task id="LOCAL-00001" summary="creazione dei primi modelli di ricette e inizio implementazione del sistema di autentificazione">
       <option name="closed" value="true" />
