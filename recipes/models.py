@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import ManyToManyField
 from django.utils import timezone
@@ -17,6 +16,13 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.name}"
 
 
 class Recipe(models.Model):
@@ -36,9 +42,10 @@ class Recipe(models.Model):
     difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS, default=3)
     portions = models.IntegerField()
     cooking_time = models.IntegerField()
+    ingredients = models.ManyToManyField(Ingredient)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     category = ManyToManyField(Category)
-    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    likes = models.ManyToManyField(User, related_name='favorites', blank=True)
 
     def __str__(self):
         return self.title
@@ -60,10 +67,3 @@ class Recipe(models.Model):
             img.save(self.image.path)
 
 
-class Ingredient(models.Model):
-    name = models.CharField(max_length=100)
-    quantity = models.CharField(max_length=10)
-    recipe = models.ManyToManyField(Recipe, related_name='ingredients')
-
-    def __str__(self):
-        return f"{self.quantity} of {self.name}"

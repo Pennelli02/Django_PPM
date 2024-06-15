@@ -12,10 +12,14 @@ from .models import Recipe, Category, Ingredient
 class RecipeListView(ListView):
     model = Recipe
     context_object_name = 'recipes'
-    template_name = 'recipes/home.html'
+    template_name = 'recipes/allRecipes.html'
+    ordering = ['-date_posted']
 
-    def get_queryset(self):
-        queryset = Recipe.objects.annotate(num_likes=Count('likes')).order_by('-date_posted')
+
+def HomeView(request):
+    mostLikedRecipes = Recipe.objects.annotate(likeCount=Count('likes')).order_by('-likes')[:4]
+    recentRecipes = Recipe.objects.order_by('-date_posted')[:4]
+    return render(request, 'recipes/home.html', {'mostLiked': mostLikedRecipes, 'recent': recentRecipes})
 
 
 # dopo si implementa la ricerca e l'ordinamento personalizzato
@@ -75,7 +79,7 @@ class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
-    success_url = '/'
+    success_url = '/profile/'
 
     def test_func(self):
         recipe = self.get_object()
