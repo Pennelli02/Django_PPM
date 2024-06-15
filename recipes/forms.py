@@ -1,6 +1,6 @@
 from django import forms
-from .models import Recipe, Ingredient
-from django.forms import modelformset_factory
+from .models import Recipe, Ingredient, RecipeIngredient
+from django.forms import inlineformset_factory
 
 
 class RecipeForm(forms.ModelForm):
@@ -13,8 +13,10 @@ class RecipeForm(forms.ModelForm):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ['name', 'quantity']
+        fields = ['name']
 
 
-# creo un form nel form che non dipenda dal foreign key
-IngredientFormSet = modelformset_factory(Ingredient, form=IngredientForm, extra=1, can_delete=True)
+class RecipeIngredientForm(forms.ModelForm):
+    class Meta:
+        model = RecipeIngredient
+        fields = ['ingredient', 'quantity']

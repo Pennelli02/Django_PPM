@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import RecipeForm, IngredientForm, IngredientFormSet
+from .forms import RecipeForm, IngredientForm, RecipeIngredientForm
 from .models import Recipe, Category, Ingredient
 
 
@@ -27,17 +28,47 @@ class RecipeDetailView(DetailView):
     model = Recipe
 
 
-class RecipeCreateView(LoginRequiredMixin, CreateView):
+def recipe_create_view(request):
+    if request.method == 'POST':
+        recipe_form = RecipeForm(request.POST, request.FILES)
+        ingredient_form = IngredientForm(request.POST)
+        recipe_ingredient_form = RecipeIngredientForm(request.POST)
+
+        if recipe_form.is_valid() and ingredient_form.is_valid() and recipe_ingredient_form.is_valid():
+            recipe = recipe_form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+
+            ingredient = ingredient_form.save()
+            recipe_ingredient = recipe_ingredient_form.save(commit=False)
+            recipe_ingredient.recipe = recipe
+            recipe_ingredient.ingredient = ingredient
+            recipe_ingredient.save()
+
+            return redirect(recipe.get_absolute_url())
+    else:
+        recipe_form = RecipeForm()
+        ingredient_form = IngredientForm()
+        recipe_ingredient_form = RecipeIngredientForm()
+
+    context = {
+        'recipe_form': recipe_form,
+        'ingredient_form': ingredient_form,
+        'recipe_ingredient_form': recipe_ingredient_form,
+    }
+    return render(request, 'recipes/recipe_form.html', context)
+
+
+class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
     form_class = RecipeForm
-    success_url = reverse_lazy('RecipeListView')
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         if self.request.POST:
-            data['ingredient_formset'] = IngredientFormSet(self.request.POST)
+            data['ingredient_formset'] = RecipeIngredientFormSet(self.request.POST, instance=self.object)
         else:
-            data['ingredient_formset'] = IngredientFormSet(queryset=Ingredient.objects.none())
+            data['ingredient_formset'] = RecipeIngredientFormSet(instance=self.object)
         return data
 
     def form_valid(self, form):
@@ -47,34 +78,15 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
             self.object = form.save(commit=False)
             self.object.author = self.request.user
             self.object.save()
-            ingredients = ingredient_formset.save(commit=False)
-            for ingredient in ingredients:
-                ingredient.save()
-                self.object.ingredients.add(ingredient)
-            self.object.save()
+            ingredient_formset.instance = self.object
+            ingredient_formset.save()
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form))
 
-    def get(self, request, *args, **kwargs):
-        self.object = None
-        return super().get(request, *args, **kwargs)
-
-
-class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Recipe
-    fields = ['image', 'title', 'description', 'ingredients', 'price', 'content', 'difficulty', 'portions',
-              'cooking-time', 'category']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
     def test_func(self):
         recipe = self.get_object()
-        if self.request.user == recipe.author:
-            return True
-        return False
+        return self.request.user == recipe.author
 
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -92,12 +104,26 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def favorite_recipes_list(request):
     user = request.user
-    recipes = Recipe.likes.filter(author=user)
-    return render(request, 'recipes/likeRecipe.html', {'recipes': recipes})
+    fav_recipes = user.likes.all()
+    return render(request, 'recipes/likeRecipe.html', {'recipes': fav_recipes})
 
+# funzione per aggiungere o rimuovere una ricetta dai preferiti
+@login_required
+def addFavoriteRecipe(request, id):
+    user = request.user
+    recipe = get_object_or_404(Recipe, pk=id)
+    if recipe.likes.filter(user=user).exists():
+        recipe.likes.remove(user)
+        messages.success(request, f'Recipe {recipe.title} has been removed from favorites')
+    else:
+        recipe.likes.add(user)
+        messages.success(request, f'Recipe {recipe.title} has been added')
+    return redirect(recipe.get_absolute_url())
 
-# def user_recipes_list(request):
-#    return render(request, 'recipes/userRecipes.html', {'recipes': Recipe.objects.filter(author=request.user)})
+@login_required
+def user_recipes_list(request):
+    return render(request, 'recipes/userRecipes.html', {'recipes': Recipe.objects.filter(author=request.user)})
+
 
 # mostra tutte le categorie presenti
 def category_list(request):

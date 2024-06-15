@@ -5,18 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0a76d39-a6af-4b47-891e-6598f6acc987" name="Changes" comment="aggiunti gli url per la gestione users">
-      <change afterPath="$PROJECT_DIR$/media/recipesPics/Screenshot_2023-10-23_101417.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/recipes/static/recipes/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/recipes/allRecipes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recipes/migrations/0002_auto_20240615_1730.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recipes/migrations/0003_auto_20240615_2144.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recipes/migrations/0004_remove_recipe_ingredients.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recipes/migrations/0005_recipe_ingredients.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/recipes/userRecipes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/djangoProjectRecipe/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/djangoProjectRecipe/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipes/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipes/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipes/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipes/recipe_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/recipe_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/logout.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/logout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +128,7 @@
       <updated>1718184396323</updated>
       <workItem from="1718184422110" duration="3625000" />
       <workItem from="1718207154711" duration="20192000" />
-      <workItem from="1718374120884" duration="30070000" />
+      <workItem from="1718374120884" duration="47475000" />
     </task>
     <task id="LOCAL-00001" summary="creazione dei primi modelli di ricette e inizio implementazione del sistema di autentificazione">
       <option name="closed" value="true" />

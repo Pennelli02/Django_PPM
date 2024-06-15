@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "recipes/base.html" %}
+{% load static %}
+{% block content %}
+	<h1 class="border-bottom"> You have logout </h1>
+    <p> click here to come back on homepage<a href={% url 'home' %}> HomePage </a></p>
+{% endblock %}

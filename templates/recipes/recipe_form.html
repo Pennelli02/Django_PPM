@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'recipes/base.html' %}
+{% load static %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ recipe_form.as_p }}
 
-</body>
-</html>
+        <h3>Aggiungi Ingredienti</h3>
+        {{ ingredient_form.as_p }}
+        {{ recipe_ingredient_form.as_p }}
+
+        <button type="submit">Salva Ricetta</button>
+    </form>
+{% endblock content %}
