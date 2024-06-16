@@ -1,14 +1,11 @@
 {% extends 'recipes/base.html' %}
 {% load static %}
 {% block content %}
+    <h1>Create a New Recipe</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ recipe_form.as_p }}
-
-        <h3>Aggiungi Ingredienti</h3>
-        {{ ingredient_form.as_p }}
-        {{ recipe_ingredient_form.as_p }}
-
-        <button type="submit">Salva Ricetta</button>
+        {{ form.as_p }}
+        <button type="submit">Create Recipe</button>
     </form>
+    
 {% endblock content %}

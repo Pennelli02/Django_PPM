@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import RecipeForm, IngredientForm, RecipeIngredientForm
+from .forms import RecipeForm, IngredientForm
 from .models import Recipe, Category, Ingredient
 
 
@@ -23,53 +23,70 @@ def HomeView(request):
     return render(request, 'recipes/home.html', {'mostLiked': mostLikedRecipes, 'recent': recentRecipes})
 
 
-# dopo si implementa la ricerca e l'ordinamento personalizzato
+class CreateRecipeView(LoginRequiredMixin, CreateView):
+    model = Recipe
+    form_class = RecipeForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse_lazy('recipesCreateIngredient', kwargs={'pk': self.object.pk})
+
+
+class CreateIngredientView(LoginRequiredMixin, CreateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = 'recipes/addIngredients.html'
+
+    def dispatch(self, *args, **kwargs):  # per ulteriore controllo  verifica se esiste una ricetta con il pk fornito
+        # e se l'utente corrente è l'autore di quella ricetta.
+        self.recipe = get_object_or_404(Recipe, pk=self.kwargs['pk'])
+        if self.recipe.author != self.request.user:
+            messages.error(self.request, 'You do not have permission to add ingredients.')
+            return redirect('home')  # Redirect to some error page or login page
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):  # Passa la ricetta al contesto del template in modo che possa essere
+        # utilizzata nel rendering del template.
+        context = super().get_context_data(**kwargs)
+        context['recipe'] = self.recipe
+        return context
+
+    def form_valid(self, form):  # Associa l'istanza della ricetta corrente al form dell'ingrediente prima di salvare.
+        form.instance.recipe = self.recipe
+        return super().form_valid(form)
+
+    def get_success_url(self):  # Determina l'URL di successo in base al pulsante premuto dall'utente
+        # (aggiungi un altro ingrediente o termina)
+        if 'finish' in self.request.POST:
+            messages.success(self.request, 'Your recipe has been successfully saved.')
+            return reverse_lazy('recipesDetail', kwargs={'slug': self.recipe.slug})
+
+        else:
+            messages.success(self.request, 'Your ingredient has been successfully added.')
+            return reverse_lazy('recipesCreateIngredient', kwargs={'pk': self.recipe.pk})
+
+
 class RecipeDetailView(DetailView):
     model = Recipe
+    template_name = 'recipes/detailRecipe.html'
+    context_object_name = 'recipe'
+    slug_field = 'slug'  # Nome del campo nel modello
+    slug_url_kwarg = 'slug'  # Nome del parametro nella URL
 
-
-def recipe_create_view(request):
-    if request.method == 'POST':
-        recipe_form = RecipeForm(request.POST, request.FILES)
-        ingredient_form = IngredientForm(request.POST)
-        recipe_ingredient_form = RecipeIngredientForm(request.POST)
-
-        if recipe_form.is_valid() and ingredient_form.is_valid() and recipe_ingredient_form.is_valid():
-            recipe = recipe_form.save(commit=False)
-            recipe.author = request.user
-            recipe.save()
-
-            ingredient = ingredient_form.save()
-            recipe_ingredient = recipe_ingredient_form.save(commit=False)
-            recipe_ingredient.recipe = recipe
-            recipe_ingredient.ingredient = ingredient
-            recipe_ingredient.save()
-
-            return redirect(recipe.get_absolute_url())
-    else:
-        recipe_form = RecipeForm()
-        ingredient_form = IngredientForm()
-        recipe_ingredient_form = RecipeIngredientForm()
-
-    context = {
-        'recipe_form': recipe_form,
-        'ingredient_form': ingredient_form,
-        'recipe_ingredient_form': recipe_ingredient_form,
-    }
-    return render(request, 'recipes/recipe_form.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ingredients'] = Ingredient.objects.filter(recipe=self.object)
+        return context
 
 
 class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Recipe
     form_class = RecipeForm
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data['ingredient_formset'] = RecipeIngredientFormSet(self.request.POST, instance=self.object)
-        else:
-            data['ingredient_formset'] = RecipeIngredientFormSet(instance=self.object)
-        return data
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -107,6 +124,7 @@ def favorite_recipes_list(request):
     fav_recipes = user.likes.all()
     return render(request, 'recipes/likeRecipe.html', {'recipes': fav_recipes})
 
+
 # funzione per aggiungere o rimuovere una ricetta dai preferiti
 @login_required
 def addFavoriteRecipe(request, id):
@@ -119,6 +137,7 @@ def addFavoriteRecipe(request, id):
         recipe.likes.add(user)
         messages.success(request, f'Recipe {recipe.title} has been added')
     return redirect(recipe.get_absolute_url())
+
 
 @login_required
 def user_recipes_list(request):

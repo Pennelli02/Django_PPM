@@ -17,12 +17,32 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_unique_slug(self.name)
+        super().save(*args, **kwargs)
+
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=100)
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=250)
+    quantity = models.CharField(max_length=250, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.quantity} of {self.name}"
+
+    class Meta:
+        app_label = 'recipes'
+
+
+def generate_unique_slug(title):
+    slug = slugify(title)
+    unique_slug = slug
+    counter = 1
+    while Recipe.objects.filter(slug=unique_slug).exists():
+        unique_slug = f"{slug}-{counter}"
+        counter += 1
+    return unique_slug
 
 
 class Recipe(models.Model):
@@ -42,6 +62,7 @@ class Recipe(models.Model):
     difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS, default=3)
     portions = models.IntegerField()
     cooking_time = models.IntegerField()
+    ingredients = models.ManyToManyField(Ingredient, related_name='recipes')
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     category = ManyToManyField(Category)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
@@ -54,9 +75,12 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = generate_unique_slug(self.title)
         super().save(*args, **kwargs)
 
+        self.resize_image()
+
+    def resize_image(self):
         image = Image.open(self.image)
         img = Image.open(self.image.path)
         # metodo che serve a risparmiare spazio perché ridimensiona le immagini
@@ -64,12 +88,3 @@ class Recipe(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
-
-
-class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    quantity = models.CharField(max_length=10)
-
-    def __str__(self):
-        return f" {self.quantity} of {self.ingredient} about {self.recipe}"

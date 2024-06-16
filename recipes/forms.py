@@ -1,6 +1,6 @@
 from django import forms
-from .models import Recipe, Ingredient, RecipeIngredient
-from django.forms import inlineformset_factory
+from .models import Recipe, Ingredient
+
 
 
 class RecipeForm(forms.ModelForm):
@@ -13,10 +13,4 @@ class RecipeForm(forms.ModelForm):
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ['name']
-
-
-class RecipeIngredientForm(forms.ModelForm):
-    class Meta:
-        model = RecipeIngredient
-        fields = ['ingredient', 'quantity']
+        fields = ['name', 'quantity']
