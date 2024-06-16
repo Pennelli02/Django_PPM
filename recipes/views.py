@@ -54,6 +54,8 @@ class CreateIngredientView(LoginRequiredMixin, CreateView):
         # utilizzata nel rendering del template.
         context = super().get_context_data(**kwargs)
         context['recipe'] = self.recipe
+        context['ingredients'] = Ingredient.objects.filter(recipe=self.recipe)
+        print(context['ingredients'])
         return context
 
     def form_valid(self, form):  # Associa l'istanza della ricetta corrente al form dell'ingrediente prima di salvare.
