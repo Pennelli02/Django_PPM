@@ -168,8 +168,7 @@ class RecipeSearchView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(title__icontains=query) |
-                Q(categories__name__icontains=query)
+                Q(title__icontains=query)
             )
         return queryset
 

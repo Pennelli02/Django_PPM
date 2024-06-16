@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0a76d39-a6af-4b47-891e-6598f6acc987" name="Changes" comment="aggiunti gli url per la gestione users">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipes/addIngredients.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/addIngredients.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipes/recipe_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/recipe_form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +119,7 @@
       <workItem from="1718374120884" duration="50664000" />
       <workItem from="1718521494360" duration="8539000" />
       <workItem from="1718535023463" duration="3540000" />
-      <workItem from="1718540554920" duration="6967000" />
+      <workItem from="1718540554920" duration="7718000" />
     </task>
     <task id="LOCAL-00001" summary="creazione dei primi modelli di ricette e inizio implementazione del sistema di autentificazione">
       <option name="closed" value="true" />
