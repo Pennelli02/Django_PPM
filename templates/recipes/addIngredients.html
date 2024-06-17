@@ -10,8 +10,10 @@
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button class="mt-2 btn btn-primary" type="submit">Add Ingredient</button>
-                <p> click these when it is your last ingredient</p>
-                <button class="mt-2 btn btn-success" type="submit" name="finish">Finish</button>
+                <div class="mt-4">
+                    <h5> click these when it is your last ingredient</h5>
+                    <button class=" btn btn-success" type="submit" name="finish">Finish</button>
+                </div>
             </form>
         </div>
     <div class="col-6 mt-2 ingredientsContainer">
@@ -19,7 +21,7 @@
         <ul>
             {% for ingredient in ingredients %}
             	<li>
-                    {{ ingredient.quantity }} of {{ ingredient.name }}
+                    {{ ingredient.quantity }} of {{ ingredient.name }} <a class="btn btn-danger" style="font-size: 12px; margin-left: 25px" href={% url 'recipesDeleteIngredient' pk=ingredient.pk %}> Remove </a>
                 </li>
             {% endfor %}
         </ul>

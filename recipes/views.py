@@ -86,21 +86,6 @@ class RecipeDetailView(DetailView):
         return context
 
 
-class RecipeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Recipe
-    form_class = RecipeForm
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
-
-
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Recipe
     success_url = '/profile/'
@@ -172,3 +157,18 @@ class RecipeSearchView(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
         return context
+
+# elimina gli ingredienti
+@login_required
+def delete_ingredient(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+    recipe = ingredient.recipe
+
+    if recipe.author != request.user:
+        messages.error(request, 'You do not have permission to delete this ingredient.')
+        return redirect('home')  # Reindirizza a una pagina appropriata
+
+    ingredient.delete()
+    messages.success(request, 'Ingredient has been successfully deleted.')
+    return redirect('recipesCreateIngredient', pk=recipe.pk)  # Reindirizza alla pagina di aggiornamento della
+    # ricetta

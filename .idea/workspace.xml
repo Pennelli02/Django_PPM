@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0a76d39-a6af-4b47-891e-6598f6acc987" name="Changes" comment="aggiunti gli url per la gestione users">
-      <change afterPath="$PROJECT_DIR$/media/recipesPics/Screenshot_2023-10-23_101417_wcMVY24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/recipes/recipe_confirm_delete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/recipesPics/Screenshot_2024-04-25_225702.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/recipesPics/Screenshot_2024-05-24_003458.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipes/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/recipes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipes/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/RecipesForCategories.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/RecipesForCategories.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipes/addIngredients.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/addIngredients.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/allRecipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/allRecipes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/categories.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/detailRecipe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/detailRecipe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipes/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipes/recipe_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/recipe_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipes/userRecipes.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipes/userRecipes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,8 +27,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="HTML File" />
         <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -125,7 +123,7 @@
       <workItem from="1718374120884" duration="50664000" />
       <workItem from="1718521494360" duration="8539000" />
       <workItem from="1718535023463" duration="3540000" />
-      <workItem from="1718540554920" duration="22090000" />
+      <workItem from="1718540554920" duration="25261000" />
     </task>
     <task id="LOCAL-00001" summary="creazione dei primi modelli di ricette e inizio implementazione del sistema di autentificazione">
       <option name="closed" value="true" />

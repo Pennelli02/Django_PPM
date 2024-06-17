@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
     {% if recipe.author == user %}
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'recipesEdit' slug=recipe.slug %}">Update</a>
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
     {% endif %} 
 {% endblock %}
