@@ -21,7 +21,7 @@
         <ul>
             {% for ingredient in ingredients %}
             	<li>
-                    {{ ingredient.quantity }} of {{ ingredient.name }} <a class="btn btn-danger" style="font-size: 12px; margin-left: 25px" href={% url 'recipesDeleteIngredient' pk=ingredient.pk %}> Remove </a>
+                    {{ ingredient.quantity }} of {{ ingredient.name }} <a class="btn btn-danger btn-sm" style="margin-left: 25px" href={% url 'recipesDeleteIngredient' pk=ingredient.pk %}> Remove </a>
                 </li>
             {% endfor %}
         </ul>

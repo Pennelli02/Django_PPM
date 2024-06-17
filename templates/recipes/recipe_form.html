@@ -4,6 +4,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <h1>Create a New Recipe</h1>
+    <p><i>Remember when you finish you can't modify the recipe</i></p>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}

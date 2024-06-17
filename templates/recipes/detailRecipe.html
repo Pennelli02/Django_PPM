@@ -1,7 +1,7 @@
 {% extends "recipes/base.html" %}
 {% load static %}
 {% block content %}
-    {% if recipe.author == user %}
+    {% if recipe.author == user or user.is_staff %}
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
     {% endif %} 
 {% endblock %}
