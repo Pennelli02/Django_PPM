@@ -9,8 +9,9 @@
             <form action="{% url 'recipesCreateIngredient' pk=recipe.pk %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button type="submit">Add Ingredient</button>
-                <button type="submit" name="finish">Finish</button>
+                <button class="mt-2 btn btn-primary" type="submit">Add Ingredient</button>
+                <p> click these when it is your last ingredient</p>
+                <button class="mt-2 btn btn-success" type="submit" name="finish">Finish</button>
             </form>
         </div>
     <div class="col-6 mt-2 ingredientsContainer">
