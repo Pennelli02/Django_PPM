@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from users import views as users_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', include('recipes.urls')),
     path('register/', users_views.register, name='register'),
     path('profile/', users_views.profile, name='profile'),

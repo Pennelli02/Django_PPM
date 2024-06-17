@@ -4,7 +4,9 @@
     <h4> Recipes on <strong>{{ categories.name }}</strong> :</h4>
    {% if recipes %}
        {% for recipe in recipes %}
-           <a href={% url 'recipesDetail' slug=recipe.slug %}><strong style="color: brown; text-decoration: underline brown">{{ recipe.title }}</strong></a>
+           <li style="list-style-type: none; padding-left:0;">
+                <a href={% url 'recipesDetail' slug=recipe.slug %}><strong style="color: brown; text-decoration: underline brown">{{ recipe.title }}</strong></a>
+           </li>
        {% endfor %}
    {% else %}
        <h6><i> Sorry no recipes in this category yet</i></h6>
