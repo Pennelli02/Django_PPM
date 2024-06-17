@@ -20,7 +20,7 @@
         <h3>Ingredients added on {{ recipe.title }}</h3>
         <ul>
             {% for ingredient in ingredients %}
-            	<li>
+            	<li class="mt-2">
                     {{ ingredient.quantity }} of {{ ingredient.name }} <a class="btn btn-danger btn-sm" style="margin-left: 25px" href={% url 'recipesDeleteIngredient' pk=ingredient.pk %}> Remove </a>
                 </li>
             {% endfor %}

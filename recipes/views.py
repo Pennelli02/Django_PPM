@@ -138,7 +138,7 @@ def category_detail(request, slug):
     return render(request, 'recipes/RecipesForCategories.html', {"categories": categories, "recipes": recipes})
 
 
-# implementa la ricerca per categoria e titolo
+# implementa la ricerca per titolo
 class RecipeSearchView(ListView):
     model = Recipe
     template_name = 'recipes/recipe_search.html'
@@ -157,6 +157,7 @@ class RecipeSearchView(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
         return context
+
 
 # elimina gli ingredienti
 @login_required

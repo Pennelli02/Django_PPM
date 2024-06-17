@@ -1,0 +1,10 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+{% block content %}
+    <h2> You saved:</h2>
+        {% if fav_recipes %}
+            
+        {% else %}
+            <h5> You don't save anything !!! Look at our <a href={% url 'home' %}>Home</a></h5>
+        {% endif %}
+{% endblock content %}

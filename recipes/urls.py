@@ -4,6 +4,7 @@ from .views import (RecipeListView, RecipeDeleteView, RecipeDetailView,
 from . import views as recipe_views
 urlpatterns = [
     path('', recipe_views.HomeView, name='home'),
+    path('search/', RecipeSearchView.as_view(), name='recipeSearch'),
     path('recipes/', RecipeListView.as_view(), name='recipes'),
     path('recipes/create/', CreateRecipeView.as_view(), name='recipesCreate'),
     path('recipes/create/ingredients/<int:pk>', CreateIngredientView.as_view(), name='recipesCreateIngredient'),
@@ -13,7 +14,6 @@ urlpatterns = [
     path('favourites/', recipe_views.favorite_recipes_list, name='favourites'),
     path('categories/', recipe_views.category_list, name='categories'),
     path('categories/<slug:slug>/', recipe_views.category_detail, name='categoryDetail'),
-    path('search/', RecipeSearchView.as_view(), name='recipeSearch'),
     path('myRecipes/', recipe_views.user_recipes_list, name='myRecipes'),
     path('favourites/<slug:slug>/', recipe_views.addFavoriteRecipe, name='editFavorite'),
 
