@@ -7,17 +7,49 @@
         <div class="row" style="border-bottom: 1px solid gray">
             <div class="col-auto imagePlace">
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" height="500px" width="500px">
-                <p><i>{{ recipe.date_posted }}</i>-- Likes: {{ recipe.likes.count }}</p>
+                <p><i>{{ recipe.date_posted }}</i></p>
             </div>
             <div class="col contentSection">
                 <h4> Description:</h4>
                 <p style="font-size: 20px">{{ recipe.description }}</p>
+                <h4>Difficulty: {{ recipe.get_difficulty_display }}</h4><!-- Utilizzo di get_difficulty_display per visualizzare il livello di difficoltà -->
+                <h4>Portions: {{ recipe.portions }}</h4>
+                <h4>Cooking Time: {{ recipe.cooking_time }} minutes </h4>
+                <h4>Likes: {{ recipe.likes.count }}</h4>
             </div>
         </div>
+        <div class="row" style="border-bottom: 1px solid gray">
+            <div class="col-5">
+                <h2>Instructions:</h2>
+                <p>{{recipe.content }}</p>
+            </div>
+            <div class="col-5">
+                <h2>Ingredients:</h2>
+                <div>
+                    <ul>
+                        {% for ingredient in ingredients %}
+                        	<li>
+                               <h3> {{ ingredient.quantity }} of {{ ingredient.name }}</h3>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-2">
+            <h2>Category: </h2>
+                <div class="card card-body">
+                    {% for category in recipe.category.all %}
+        	            <strong><a style="text-decoration: none" href={% url 'categoryDetail' category.slug %}>{{ category.name }}</a></strong>
+                    {% endfor %}
+                 </div>
+            </div>
+        </div>
+    
         {% if recipe.author == user or user.is_staff %}
+            <h5>Delete the post</h5>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
         {% endif %} 
-        <div class=" text-center" style="position: absolute; top: 0; right: 0" >
+        <div class=" text-center" style="position: absolute; top: 20px; right: 0" >
            <form method="post" action="{% url 'editFavorite' recipe.pk %}">
                 {% csrf_token %}
                 <button class="btn btn-success" type="submit">
