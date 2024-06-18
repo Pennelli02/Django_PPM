@@ -15,6 +15,6 @@ urlpatterns = [
     path('categories/', recipe_views.category_list, name='categories'),
     path('categories/<slug:slug>/', recipe_views.category_detail, name='categoryDetail'),
     path('myRecipes/', recipe_views.user_recipes_list, name='myRecipes'),
-    path('favourites/<slug:slug>/', recipe_views.addFavoriteRecipe, name='editFavorite'),
+    path('recipes/<slug:slug>/favourites/<int:pk>/', recipe_views.addFavoriteRecipe, name='editFavorite'),
 
 ]

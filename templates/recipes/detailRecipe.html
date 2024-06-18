@@ -4,4 +4,11 @@
     {% if recipe.author == user or user.is_staff %}
         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
     {% endif %} 
+    <div>
+        {% if user in recipe.likes.all %}
+            <a class="btn btn-success" href={% url 'editFavorite' slug=recipe.slug pk=recipe.pk  %}>Like</a>
+        {% else %}
+            <a class="btn btn-danger" href={% url 'editFavorite'  slug=recipe.slug pk=recipe.pk %}>Remove</a>
+        {% endif %} 
+    </div>
 {% endblock %}

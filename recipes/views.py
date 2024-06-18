@@ -107,17 +107,16 @@ def favorite_recipes_list(request):
 
 # funzione per aggiungere o rimuovere una ricetta dai preferiti
 @login_required
-def addFavoriteRecipe(request, id):
+def addFavoriteRecipe(request, pk, slug):
     user = request.user
-    recipe = get_object_or_404(Recipe, pk=id)
-    if recipe.likes.filter(user=user).exists():
+    recipe = get_object_or_404(Recipe, pk=pk, slug=slug)
+    if recipe.likes.filter(pk=user.pk).exists():
         recipe.likes.remove(user)
         messages.success(request, f'Recipe {recipe.title} has been removed from favorites')
     else:
         recipe.likes.add(user)
-        messages.success(request, f'Recipe {recipe.title} has been added')
-    return HttpResponseRedirect(
-        recipe.get_absolute_url())  # reindirizza l'utente alla pagina dei dettagli della ricetta
+        messages.success(request, f'Recipe {recipe.title} has been added to favorites')
+    return render(request, 'recipes/detailRecipe.html', {'recipe': recipe})
 
 
 @login_required
