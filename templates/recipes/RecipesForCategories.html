@@ -5,7 +5,7 @@
    {% if recipes %}
        {% for recipe in recipes %}
            <li style="list-style-type: none; padding-left:0;">
-                <a href={% url 'recipesDetail' slug=recipe.slug %}><strong style="color: brown; text-decoration: underline brown">{{ recipe.title }}</strong></a>
+                <a href={% url 'recipesDetail' slug=recipe.slug %}><h5><strong style="color: brown; text-decoration: underline brown">{{ recipe.title }}</strong></h5></a>
            </li>
        {% endfor %}
    {% else %}

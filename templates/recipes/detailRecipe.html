@@ -1,14 +1,33 @@
 {% extends "recipes/base.html" %}
 {% load static %}
 {% block content %}
-    {% if recipe.author == user or user.is_staff %}
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
-    {% endif %} 
-    <div>
-        {% if user in recipe.likes.all %}
-            <a class="btn btn-success" href={% url 'editFavorite' slug=recipe.slug pk=recipe.pk  %}>Like</a>
-        {% else %}
-            <a class="btn btn-danger" href={% url 'editFavorite'  slug=recipe.slug pk=recipe.pk %}>Remove</a>
+    <div class="RecipePlace" style="position: relative">
+        <h1> {{ recipe.title }}</h1>
+        <h2>Author: {{ recipe.author }}</h2>
+        <div class="row" style="border-bottom: 1px solid gray">
+            <div class="col-auto imagePlace">
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" height="500px" width="500px">
+                <p><i>{{ recipe.date_posted }}</i>-- Likes: {{ recipe.likes.count }}</p>
+            </div>
+            <div class="col contentSection">
+                <h4> Description:</h4>
+                <p style="font-size: 20px">{{ recipe.description }}</p>
+            </div>
+        </div>
+        {% if recipe.author == user or user.is_staff %}
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
         {% endif %} 
+        <div class=" text-center" style="position: absolute; top: 0; right: 0" >
+           <form method="post" action="{% url 'editFavorite' recipe.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-success" type="submit">
+                {% if user in recipe.likes.all %}
+                    Remove from favorites
+                {% else %}
+                    Add to favorites
+                {% endif %}
+                </button>
+           </form>
+        </div>
     </div>
 {% endblock %}

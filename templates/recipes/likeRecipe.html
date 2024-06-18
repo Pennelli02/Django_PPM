@@ -5,11 +5,11 @@
         {% if recipes %}
             <div class="card my-4">
         {% for recipe in recipes %}
-            <div class="row card-body">
+            <div class="row  card-body" >
                 <div class="col-auto">
                     <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" class="img-fluid cover" height="200px">
                 </div>
-                <div class="col  d-flex" style="position: relative"> <!--FIX ME-->
+                <div class="col  d-flex" style="position: relative;"> <!--FIX ME-->
                         <div>
                             <h3 class="card-title">{{ recipe.title }}</h3>
                             <p class="card-text">{{ recipe.description }}</p>
