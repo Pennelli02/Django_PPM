@@ -16,12 +16,13 @@
       a function to manage the images (resize and default image)
     </li>
     <li>
-      search by title
+      search recipes by title
     </li>
 </ul>
 <p>
   User can search and see the details about recipes without do the login, but if you register/login User can write recipes, save it on his favourites and take a look on them
   When an user create a recipe have to choose an image (if not there is a default image), a title, description, the istructions, the category (is a manytomany relationship so he can choose more than one and there   are already in the website added by the admins) and other feature. User can add/remove like and save/remove it on his profile thanks to a button. Admin and staff can delete any recipes whitout being the author.
+  We can see all the categories and from them we can see all the recipes associated with the category.
   For interface it is used bootstrap.
 </p>
 
