@@ -15,6 +15,9 @@
     <li>
       a function to manage the images (resize and default image)
     </li>
+    <li>
+      search by title
+    </li>
 </ul>
 <p>
   User can search and see the details about recipes without do the login, but if you register/login User can write recipes, save it on his favourites and take a look on them
