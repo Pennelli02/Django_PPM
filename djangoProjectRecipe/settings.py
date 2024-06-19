@@ -21,8 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7gk!gh=n(=wl+2)88mkf9tjpea$w^ep*z_845=r2rpb=f!(lg='
-
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7gk!gh=n(=wl+2)88mkf9tjpea$w^ep*z_845=r2rpb=f!(lg=')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -79,15 +78,13 @@ WSGI_APPLICATION = 'djangoProjectRecipe.wsgi.application'
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(default='postgres://productiondatabase_9tjp_user:NlbbfhrbXioNuQ2cAP1hPayV7WFi1mMv@dpg-cppbuu5ds78s73e5kb9g-a:5432/productiondatabase_9tjp')
 }
-# DATABASES['default']=dj_database_url.parse('postgres://productiondatabase_9tjp_user:NlbbfhrbXioNuQ2cAP1hPayV7WFi1mMv@dpg-cppbuu5ds78s73e5kb9g-a.frankfurt-postgres.render.com/productiondatabase_9tjp')
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split()
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -124,17 +121,11 @@ MEDIA_URL = '/media/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-# This setting informs Django of the URI path from which your static files will be served to users
-# Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/...
-STATIC_URL = '/static/'
 
-# This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
