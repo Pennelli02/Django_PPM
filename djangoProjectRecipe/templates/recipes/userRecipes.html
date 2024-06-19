@@ -1,0 +1,26 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+{% block content %}
+    <h3 class="mb-4 title"> Your Recipes</h3>
+    {% if recipes %}
+   <div class=" container listRecipes">
+        <div class="row">
+            {% for recipe in recipes %}
+            <div class="card" style="width: 15rem;">
+               <a href={% url 'recipesDetail' slug=recipe.slug %}><img src="{{ recipe.image.url }}" class="card-img-top" alt="{{recipe.title}}Image}" height="200px" width="200px"></a>
+                <div class="card-body">
+                    <a  href={% url 'recipesDetail' slug=recipe.slug %}><h5 class="card-title">{{ recipe.title }}</h5></a>
+                    <h6>Author: {{ recipe.author }} </h6>
+                    <p class="dateString"> {{ recipe.date_posted }}</p><!--without filtering-->
+                    <span> Likes: {{ recipe.likes.count }}</span>
+                    <p class="mt-2 card-text"><strong>{{ recipe.description|truncatewords:10 }}</strong></p>
+                </div>  
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <h3> You don't have any recipes! <strong> Create One!! </strong></h3>
+        <a class="btn btn-primary" href={% url 'recipesCreate' %}>Create</a>
+    {% endif %}
+{% endblock %}

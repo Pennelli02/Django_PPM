@@ -1,0 +1,21 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Register</legend>
+            {{ form|crispy }} 
+        </fieldset>
+        <div class="form-group mt-4">
+            <button class=" btn btn-primary" type="submit"> Sign in</button>
+        </div>
+    </form>
+    </div>
+    <div class="mt-2 alreadyRegister">
+        <p> have already an account? <a class="metaLink" href={% url 'login' %}> Click here</a></p>
+    </div>
+{% endblock %}
