@@ -1,8 +1,7 @@
 <h1> RECIPE SHARING WEBSITE</h1>
-<hr>
 <h4>It is a project about a recipe sharing website using the framework django.</h4>
 <h4>It is very simple because it is focused on backend using the framework django</h4>
-<h3>Implemnts:</h3>
+<h3>Implements:</h3>
   <ul>
     <li>
       user register/login/logout logic and templates
