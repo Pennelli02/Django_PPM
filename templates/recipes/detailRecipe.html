@@ -1,10 +1,10 @@
 {% extends "recipes/base.html" %}
 {% load static %}
 {% block content %}
-    <div class="RecipePlace" style="position: relative">
+    <div class="recipePlace">
         <h1> {{ recipe.title }}</h1>
         <h2>Author: {{ recipe.author }}</h2>
-        <div class="row" style="border-bottom: 1px solid gray">
+        <div class="row recipeSection">
             <div class="col-auto imagePlace">
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" height="500px" width="500px">
                 <p><i>{{ recipe.date_posted }}</i></p>
@@ -18,7 +18,7 @@
                 <h4>Likes: {{ recipe.likes.count }}</h4>
             </div>
         </div>
-        <div class="row" style="border-bottom: 1px solid gray">
+        <div class="row recipeSection">
             <div class="col-5">
                 <h2>Instructions:</h2>
                 <p>{{recipe.content }}</p>
@@ -37,19 +37,19 @@
             </div>
             <div class="col-2">
             <h2>Category: </h2>
-                <div class="card card-body">
+                <div class="card card-body categoryPlace">
                     {% for category in recipe.category.all %}
-        	            <strong><a style="text-decoration: none" href={% url 'categoryDetail' category.slug %}>{{ category.name }}</a></strong>
+        	            <strong><a href={% url 'categoryDetail' category.slug %}>{{ category.name }}</a></strong>
                     {% endfor %}
                  </div>
             </div>
         </div>
-    
+
         {% if recipe.author == user or user.is_staff %}
             <h5>Delete the post</h5>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'recipesDelete' slug=recipe.slug %}">Delete</a>
         {% endif %} 
-        <div class=" text-center" style="position: absolute; top: 20px; right: 0" >
+        <div class="text-center modifyFavorite">
            <form method="post" action="{% url 'editFavorite' recipe.pk %}">
                 {% csrf_token %}
                 <button class="btn btn-success" type="submit">

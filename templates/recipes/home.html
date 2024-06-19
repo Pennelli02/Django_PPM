@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
     <section class="pt-4 mostLikedSection">
-        <h2 class="sectionTitle " style="border-bottom: 1px solid red"> POPULAR RECIPES</h2>
+        <h2 class="sectionTitle"> POPULAR RECIPES</h2>
         <div class="row">
             {% for mostLiked in mostLiked %}
                 <div class="col mr-1 card" style="width: 13.5rem;">
                    <a href={% url 'recipesDetail' slug=mostLiked.slug %}><img src="{{ mostLiked.image.url }}" class="card-img-top" alt="{{mostLiked.title}}Image}" width="300px" height="300px"></a>
                     <div class="card-body">
-                        <a style="text-decoration: none; color: brown" href={% url 'recipesDetail' slug=mostLiked.slug %}><h5 class="card-title">{{ mostLiked.title }}</h5></a>
+                        <a href={% url 'recipesDetail' slug=mostLiked.slug %}><h5 class="card-title">{{ mostLiked.title }}</h5></a>
                         <h6>Author: {{ mostLiked.author }} </h6>
                         <p style="color: dodgerblue"> {{ mostLiked.date_posted }}</p><!--without filtering-->
                         <span> Likes: {{ mostLiked.likes.count }}</span>
@@ -19,17 +19,17 @@
         </div>
     </section>
     <section class=" mt-4 pt-4 mostRecentRecipes">
-        <h2 class="sectionTitle " style="border-bottom: 1px solid red"> RECENT RECIPE</h2>
+        <h2 class="sectionTitle"> RECENT RECIPE</h2>
         <div class="row">
             {% for recent in recent %}
                 <div class=" col card" style="width: 13.5rem;">
                     <a href={% url 'recipesDetail' slug=recent.slug %}><img src="{{ recent.image.url }}" class="card-img-top" alt="{{recent.title}}Image}" width="300px" height="300px"></a>
                     <div class="card-body">
-                        <a style="text-decoration: none; color: brown" href={% url 'recipesDetail' slug=recent.slug %}><h5 class="card-title">{{ recent.title }}</h5></a>
+                        <a href={% url 'recipesDetail' slug=recent.slug %}><h5 class="card-title">{{ recent.title }}</h5></a>
                         <h6>Author: {{ recent.author }} </h6>
-                        <p style="color: dodgerblue"> {{ recent.date_posted }}</p><!--without filtering-->
+                        <p class="dateString"> {{ recent.date_posted }}</p><!--without filtering-->
                         <span> Likes: {{ recent.likes.count }}</span>
-                        <p class="mt-2 card-text" style="font-weight: 700">{{ recent.description|truncatewords:10 }}</p>
+                        <p class="mt-2 card-text"><strong>{{ recent.description|truncatewords:10 }}</strong></p>
                     </div>  
                 </div>
             {% endfor %}

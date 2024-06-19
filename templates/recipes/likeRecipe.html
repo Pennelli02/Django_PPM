@@ -5,27 +5,27 @@
         {% if recipes %}
             <div class="card my-4">
         {% for recipe in recipes %}
-            <div class="row  card-body" >
-                <div class="col-auto">
-                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" class="img-fluid cover" height="200px">
-                </div>
-                <div class="col  d-flex" style="position: relative;"> <!--FIX ME-->
-                        <div>
-                            <h3 class="card-title">{{ recipe.title }}</h3>
-                            <p class="card-text">{{ recipe.description }}</p>
-                            <span>Author:<strong> {{ recipe.author }}</strong> -- <i style="color: dodgerblue">{{ recipe.date_posted }}</i></span>
-                            <div class="text-center mt-3">
-                                <h5 style="color: brown">Likes: <strong>{{ recipe.likes.count }}</strong></h5>
-                            </div>
+            <div class="row card-body">
+            <div class="col-auto">
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}Image" class="img-fluid cover" height="200px">
+            </div>
+            <div class="col  d-flex contentCard"> 
+                    <div>
+                        <h3 class="card-title">{{ recipe.title }}</h3>
+                        <p class="card-text">{{ recipe.description }}</p>
+                        <span>Author:<strong> {{ recipe.author }}</strong> -- <i class="dateString">{{ recipe.date_posted }}</i></span>
+                        <div class="text-center mt-3">
+                            <h5 class="Likes">Likes: <strong>{{ recipe.likes.count }}</strong></h5>
                         </div>
-                            <div style="position: absolute; top:0; right: 0; ">
-                                <a href="{% url 'recipesDetail' slug=recipe.slug %}" class="btn btn-outline-dark btn-small">View Recipe</a>
-                            </div>
                     </div>
+                        <div class="detailRecipes">
+                            <a href="{% url 'recipesDetail' slug=recipe.slug %}" class="btn btn-outline-dark btn-small">View Recipe</a>
+                        </div>
+                </div>
             </div>
-            {% endfor %}
-            </div>
+        {% endfor %}
+    </div>
         {% else %}
-            <h5> You don't save anything !!! Look at our <a href={% url 'home' %}>Home</a></h5>
+            <h5> You don't save anything !!! Look at our <a class=" btn btn-link " href={% url 'home' %}>Home</a></h5>
         {% endif %}
 {% endblock content %}

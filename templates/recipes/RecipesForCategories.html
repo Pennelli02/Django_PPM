@@ -3,11 +3,13 @@
 {% block content %}
     <h4> Recipes on <strong>{{ categories.name }}</strong> :</h4>
    {% if recipes %}
+       <ul>
        {% for recipe in recipes %}
-           <li style="list-style-type: none; padding-left:0;">
+           <li class="menuRecipes">
                 <a href={% url 'recipesDetail' slug=recipe.slug %}><h5><strong style="color: brown; text-decoration: underline brown">{{ recipe.title }}</strong></h5></a>
            </li>
        {% endfor %}
+       </ul>
    {% else %}
        <h6><i> Sorry no recipes in this category yet</i></h6>
    {% endif %} 

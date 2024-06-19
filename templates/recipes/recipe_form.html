@@ -6,7 +6,9 @@
     <h1>Create a New Recipe</h1>
     <p><i>Remember when you finish you can't modify the recipe</i></p>
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+        <p>In content write the instruction about your recipe</p>
+        <p>Remember cooking time is in minutes</p>
+        <p>To pick more than one category ctrl + click</p>
         {{ form|crispy }}
         <button class="btn btn-primary mt-2" type="submit">Next Step</button>
     </form>
