@@ -144,6 +144,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 '''
+Render non gestisce in automatico le foto nei media quindi va installato boto3
+ $ pip install boto3 django-storages
+e scrivere questo + add in enviroment le immagini
 INSTALLED_APPS += ['storages']
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
