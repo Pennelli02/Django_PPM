@@ -28,6 +28,9 @@
 <div>
 <i> Riscontrato alcuni problemi dopo il deployment nella visualizzazione delle immagini e certe funzioni di bootstrap estetiche. Vengono salvate nel database, ma il sito non riesce a mostrarle (cosa che non accadeva prima del deployment)</i>
 </div>
-
+<div>
+  <h5>Per mostrare immagini dal media su render è necessario l'installazione di un boto3 --> pip install boto3 django-storages </h5>
+  <p>Per chi volesse lo può scaricare nel proprio progetto e inserire nel requrements.txt io non l'ho fatto perché l'obiettivo del corso non è il frontend, ma il backend</p>
+</div>
   
   
