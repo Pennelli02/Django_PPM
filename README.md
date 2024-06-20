@@ -25,7 +25,9 @@
   We can see all the categories and from them we can see all the recipes associated with the category.
   For interface it is used bootstrap.
 </p>
-
+<div>
+<i> Riscontrato alcuni problemi dopo il deployment nella visualizzazione delle immagini e certe funzioni di bootstrap estetiche. Vengono salvate nel database, ma il sito non riesce a mostrarle (cosa che non accadeva prima del deployment)</i>
+</div>
 
   
   
