@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0a76d39-a6af-4b47-891e-6598f6acc987" name="Changes" comment="aggiunti gli url per la gestione users">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/djangoProjectRecipe/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/djangoProjectRecipe/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +122,7 @@
       <workItem from="1718778933375" duration="3656000" />
       <workItem from="1718783310847" duration="3282000" />
       <workItem from="1718815892493" duration="8692000" />
-      <workItem from="1718831020302" duration="10783000" />
+      <workItem from="1718831020302" duration="11090000" />
     </task>
     <task id="LOCAL-00001" summary="creazione dei primi modelli di ricette e inizio implementazione del sistema di autentificazione">
       <option name="closed" value="true" />
