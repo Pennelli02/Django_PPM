@@ -18,6 +18,9 @@
     <li>
       search recipes by title
     </li>
+    <li>
+      user friendly urs using the slug on recipes and categories
+    </li>
 </ul>
 <p>
   User can search and see the details about recipes without do the login, but if you register/login User can write recipes, save it on his favourites and take a look on them
