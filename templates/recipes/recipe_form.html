@@ -9,6 +9,7 @@
         <p>In content write the instruction about your recipe</p>
         <p>Remember cooking time is in minutes</p>
         <p>To pick more than one category ctrl + click</p>
+        {% csrf_token %}
         {{ form|crispy }}
         <button class="btn btn-primary mt-2" type="submit">Next Step</button>
     </form>
